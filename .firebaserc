@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "eroomapp-74e1f",
+    "staging": "eroomapp-74e1f",
+    "eroomapp-74e1f": "eroomapp-74e1f"
+  }
+}

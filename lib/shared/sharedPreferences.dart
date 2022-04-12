@@ -47,9 +47,11 @@ class SharedPrefs {
     preferences.setString('userStatus', userStatus);
   }
 
-  static Future<String> getUserStatus() async {
+  static Future<String?> getUserStatus() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    return preferences.getString('userStatus')!;
+    return preferences.getString('userStatus') != null
+        ? preferences.getString('userStatus')
+        : null;
   }
 
   static Future bookMarkFavourates(List<String> idPosts) async {
@@ -57,8 +59,10 @@ class SharedPrefs {
     preferences.setStringList('idposts', idPosts);
   }
 
-  static Future<List<String>> getBookMarkFavourates() async {
+  static Future<List<String>?> getBookMarkFavourates() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    return preferences.getStringList('idposts')!;
+    return preferences.getStringList('idposts') != null
+        ? preferences.getStringList('idposts')
+        : [];
   }
 }

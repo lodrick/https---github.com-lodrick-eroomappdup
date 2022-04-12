@@ -87,11 +87,13 @@ class _PostInfoState extends State<PostInfo> {
     bookMarkedFavourates = [];
     SharedPrefs.getBookMarkFavourates().then((result) {
       setState(() {
-        bookMarkedFavourates = result;
-        if (bookMarkedFavourates.isNotEmpty) {
-          for (String data in result) {
-            if (data.contains('${widget.advert.id}')) {
-              isLiked = true;
+        if (result != null) {
+          bookMarkedFavourates = result;
+          if (bookMarkedFavourates.isNotEmpty) {
+            for (String data in bookMarkedFavourates) {
+              if (data.contains('${widget.advert.id}')) {
+                isLiked = true;
+              }
             }
           }
         }

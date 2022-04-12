@@ -13,7 +13,7 @@ class LoginStore = LoginStoreBase with _$LoginStore;
 
 abstract class LoginStoreBase with Store {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  String? actualCode;
+  String actualCode = "";
 
   @observable
   bool isLoginLoading = false;
@@ -123,7 +123,7 @@ abstract class LoginStoreBase with Store {
     isOtpLoading = true;
 
     final AuthCredential _authCredential = PhoneAuthProvider.credential(
-        verificationId: actualCode!, smsCode: smsCode);
+        verificationId: actualCode, smsCode: smsCode);
 
     await _auth.signInWithCredential(_authCredential).catchError((error) {
       isOtpLoading = false;

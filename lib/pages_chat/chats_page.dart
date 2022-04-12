@@ -72,9 +72,7 @@ class _ChatsPageState extends State<ChatsPage> {
                           descriptions:
                               'Are you sure you want to exit the app?',
                           text: 'bluh bluh',
-                          imgUrl: widget.currentImageUrl != null
-                              ? widget.currentImageUrl
-                              : 'assets/img/black-house-01.jpeg',
+                          imgUrl: widget.currentImageUrl,
                         ),
                       );
                       break;

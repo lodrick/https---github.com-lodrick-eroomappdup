@@ -1,6 +1,4 @@
 //import 'package:eRoomApp/models_chat/user.dart';
-import 'models/user_model.dart';
-
 class Users {
   /*static get initUsers => <User>[
         User(

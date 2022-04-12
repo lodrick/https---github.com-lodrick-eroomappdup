@@ -2,12 +2,10 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:eRoomApp/api/firebase_api.dart';
-import 'package:eRoomApp/pages/main_posts_page.dart';
 import 'package:eRoomApp/shared/sharedPreferences.dart';
 import 'package:eRoomApp/stores/login_store.dart';
 import 'package:eRoomApp/widgets/loader_hud.dart';
 import 'package:eRoomApp/widgets/popover.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:eRoomApp/models/user_model.dart';
@@ -53,7 +51,9 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
     super.initState();
     SharedPrefs.getUserStatus().then((value) {
       setState(() {
-        _userDesc = value;
+        if (value != null) {
+          _userDesc = value;
+        }
       });
     });
   }
@@ -482,7 +482,9 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
                                           SharedPrefs.getUserStatus()
                                               .then((value) {
                                             setState(() {
-                                              _userDesc = value;
+                                              if (value != null) {
+                                                _userDesc = value;
+                                              }
                                             });
                                           });
                                         },
@@ -624,7 +626,6 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
-    bool _switchWidget = false;
 
     return Form(
       key: formKey,
@@ -798,9 +799,7 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
                                             snapshot.data!.idUser.toString();
                                       }
                                     }
-                                    if (snapshot.data != null) {
-                                      _switchWidget = true;
-                                    }
+
                                     phoneNumber = loginStore
                                         .firebaseUser.phoneNumber
                                         .toString();
@@ -809,79 +808,48 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
                                         horizontal: 16.w,
                                         vertical: 8.h,
                                       ),
-                                      child: snapshot.data != null
-                                          ? Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.stretch,
-                                              children: <Widget>[
-                                                rowUser(
-                                                  fieldIconData:
-                                                      FontAwesomeIcons.userAlt,
-                                                  text:
-                                                      firstNameController.text,
-                                                  desc: 'Name',
-                                                  iconData: Icons.edit,
-                                                  field: 'name',
-                                                ),
-                                                const Divider(thickness: 1),
-                                                rowUser(
-                                                  fieldIconData:
-                                                      FontAwesomeIcons.userAlt,
-                                                  text: lastNameController.text,
-                                                  desc: 'Surname',
-                                                  iconData: Icons.edit,
-                                                  field: 'surname',
-                                                ),
-                                                const Divider(thickness: 1),
-                                                rowUser(
-                                                  fieldIconData:
-                                                      FontAwesomeIcons.envelope,
-                                                  text: emailController.text,
-                                                  desc: 'Email',
-                                                  iconData: Icons.edit,
-                                                  field: 'email',
-                                                ),
-                                                const Divider(thickness: 1),
-                                                rowUser(
-                                                  fieldIconData:
-                                                      FontAwesomeIcons.phone,
-                                                  text: contactNumberController
-                                                      .text,
-                                                  desc: 'Phone',
-                                                  field: 'contactNumber',
-                                                ),
-                                              ],
-                                            )
-                                          : Column(
-                                              children: [
-                                                getTextField(
-                                                  hint: 'John',
-                                                  labelText: 'Name:',
-                                                  controller:
-                                                      firstNameController,
-                                                  errorText:
-                                                      'Please enter your name',
-                                                ),
-                                                SizedBox(height: 16.h),
-                                                getTextField(
-                                                    hint: 'Doe',
-                                                    labelText: 'Surname:',
-                                                    controller:
-                                                        lastNameController,
-                                                    errorText:
-                                                        'Please enter your surname'),
-                                                SizedBox(height: 16.h),
-                                                getTextField(
-                                                  hint: 'john.doe@gmail.com',
-                                                  labelText: 'Email:',
-                                                  controller: emailController,
-                                                  errorText:
-                                                      'Please enter your email',
-                                                ),
-                                              ],
-                                            ),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        children: <Widget>[
+                                          rowUser(
+                                            fieldIconData:
+                                                FontAwesomeIcons.userAlt,
+                                            text: firstNameController.text,
+                                            desc: 'Name',
+                                            iconData: Icons.edit,
+                                            field: 'name',
+                                          ),
+                                          const Divider(thickness: 1),
+                                          rowUser(
+                                            fieldIconData:
+                                                FontAwesomeIcons.userAlt,
+                                            text: lastNameController.text,
+                                            desc: 'Surname',
+                                            iconData: Icons.edit,
+                                            field: 'surname',
+                                          ),
+                                          const Divider(thickness: 1),
+                                          rowUser(
+                                            fieldIconData:
+                                                FontAwesomeIcons.envelope,
+                                            text: emailController.text,
+                                            desc: 'Email',
+                                            iconData: Icons.edit,
+                                            field: 'email',
+                                          ),
+                                          const Divider(thickness: 1),
+                                          rowUser(
+                                            fieldIconData:
+                                                FontAwesomeIcons.phone,
+                                            text: contactNumberController.text,
+                                            desc: 'Phone',
+                                            field: 'contactNumber',
+                                          ),
+                                        ],
+                                      ),
                                     );
                                   }
                               }
@@ -896,147 +864,8 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
             ),
           ),
         ),
-        bottomNavigationBar: _switchWidget
-            ? Container(
-                color: Colors.white,
-                padding: EdgeInsets.symmetric(
-                  horizontal: 20.w,
-                  vertical: 5.h,
-                ),
-                height: 70.h,
-                child: Center(
-                  child: Wrap(
-                    alignment: WrapAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        width: double.infinity,
-                        child: TextButton(
-                          onPressed: () {
-                            if (formKey.currentState!.validate()) {
-                              User user = User(
-                                name:
-                                    firstNameController.text.toString().trim(),
-                                surname:
-                                    lastNameController.text.toString().trim(),
-                                contactNumber: phoneNumber ?? '',
-                                email: emailController.text.toString().trim(),
-                                country: 'South Africa',
-                                imageUrl: imageUrl != null
-                                    ? imageUrl
-                                    //: 'https://thumbs.dreamstime.com/z/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg',
-                                    : 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngfind.com%2Fmpng%2FmJbmTb_png-file-svg-add-employee-icon-transparent-png%2F&psig=AOvVaw26wyGBlxMUHpu2LNYOjDJg&ust=1626003509118000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCJDWw6O12PECFQAAAAAdAAAAABAD',
-                                lastMessageTime: DateTime.now(),
-                                password: 'password',
-                                userType: 'client',
-                              );
-
-                              FirebaseApi.addUser(user).then((result) {
-                                print('Res for firestore data');
-
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => MainPostsPage(
-                                      firstName: '${result!.name}',
-                                      lastName: '${result.surname}',
-                                      email: '${result.email}',
-                                      contactNumber: '${result.contactNumber}',
-                                      idUser: '${result.idUser}',
-                                    ),
-                                  ),
-                                );
-                                Fluttertoast.showToast(
-                                  msg: 'User Successfully saved.',
-                                  toastLength: Toast.LENGTH_LONG,
-                                  gravity: ToastGravity.BOTTOM,
-                                  timeInSecForIosWeb: 1,
-                                  backgroundColor: MyColors.darkTextColor,
-                                  textColor: Colors.white,
-                                  fontSize: 16.sp,
-                                );
-                              }).catchError((e) {
-                                debugPrint(
-                                    'Error adding a user from firestore: ' +
-                                        e.toString());
-                              });
-                            }
-                          },
-                          style: ButtonStyle(
-                            side: MaterialStateProperty.all(
-                              BorderSide(
-                                color: MyColors.borderColor,
-                              ),
-                            ),
-                            foregroundColor: MaterialStateProperty.all(
-                              MyColors.darkTextColor,
-                            ),
-                            backgroundColor: MaterialStateProperty.all(
-                              MyColors.primaryColor,
-                            ),
-                            padding: MaterialStateProperty.all(
-                              EdgeInsets.symmetric(vertical: 14.h),
-                            ),
-                            textStyle: MaterialStateProperty.all(
-                              TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 30.h,
-                                ),
-                                child: Text(
-                                  'Save',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18.sp,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 30.h,
-                                ),
-                                child: Icon(
-                                  FontAwesomeIcons.solidArrowAltCircleRight,
-                                  size: 25.sp,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            : SizedBox.shrink(),
+        bottomNavigationBar: SizedBox.shrink(),
       ),
     );
   }
-
-  /*Widget showAlert(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => Center(
-        child: CircularProgressIndicator(
-          backgroundColor: MyColors.primaryColor,
-        ),
-      ),
-    );
-  }*/
-
-  /*void clear() {
-    firstNameController.clear();
-    lastNameController.clear();
-    contactNumberController.clear();
-    emailController.clear();
-    userShortDescriptionController.clear();
-  }*/
 }

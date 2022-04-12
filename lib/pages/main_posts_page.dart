@@ -262,7 +262,7 @@ class _MainPostsPageState extends State<MainPostsPage> {
                                       ),
                                       SizedBox(height: 10.h),
                                       Text(
-                                        names != null ? names : 'John Doe',
+                                        names,
                                         style: TextStyle(
                                           color: Colors.white70,
                                           fontSize: 18.sp,
@@ -270,9 +270,7 @@ class _MainPostsPageState extends State<MainPostsPage> {
                                         ),
                                       ),
                                       Text(
-                                        email != null
-                                            ? email
-                                            : 'johndoe@gmail.com',
+                                        email ,
                                         style: TextStyle(
                                           color: Colors.white60,
                                           fontSize: 14.sp,

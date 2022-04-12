@@ -22,6 +22,15 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController contactNumberController = TextEditingController();
   TextEditingController emailController = TextEditingController();
 
+  @override
+  void dispose() {
+    super.dispose();
+    firstNameController.clear();
+    lastNameController.clear();
+    contactNumberController.clear();
+    emailController.clear();
+  }
+
   Widget getTextField({
     required String hint,
     required String labelText,
@@ -34,7 +43,6 @@ class _RegisterPageState extends State<RegisterPage> {
         if ((value == null && value!.isEmpty)) {
           //!RegExp(r'^[A-Za-z0-9]+$').hasMatch(value)
           //!RegExp(r'^[a-z A-Z]+$').hasMatch(value)
-
           return errorText;
         }
         return null;
@@ -106,118 +114,7 @@ class _RegisterPageState extends State<RegisterPage> {
             buildRegisterWidget()
           ],
         ),
-        bottomNavigationBar: Container(
-          color: MyColors.textFieldColor,
-          padding: EdgeInsets.symmetric(
-            horizontal: 20.w,
-            vertical: 5.h,
-          ),
-          height: 70.h,
-          child: Center(
-            child: Wrap(
-              alignment: WrapAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  width: double.infinity,
-                  child: TextButton(
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        User user = User(
-                          name: firstNameController.text.trim(),
-                          surname: lastNameController.text.trim(),
-                          contactNumber: widget.phoneNumber.trim(),
-                          email: emailController.text.trim(),
-                          country: 'South Africa',
-                          imageUrl:
-                              'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngfind.com%2Fmpng%2FmJbmTb_png-file-svg-add-employee-icon-transparent-png%2F&psig=AOvVaw26wyGBlxMUHpu2LNYOjDJg&ust=1626003509118000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCJDWw6O12PECFQAAAAAdAAAAABAD',
-                          lastMessageTime: DateTime.now(),
-                          password: 'password',
-                          userType: 'client',
-                        );
-
-                        FirebaseApi.addUser(user).then((result) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MainPostsPage(
-                                firstName: '${result!.name}',
-                                lastName: '${result.surname}',
-                                email: '${result.email}',
-                                contactNumber: '${result.contactNumber}',
-                                idUser: '${result.idUser}',
-                              ),
-                            ),
-                          );
-                          Fluttertoast.showToast(
-                            msg: 'User Successfully saved.',
-                            toastLength: Toast.LENGTH_LONG,
-                            gravity: ToastGravity.BOTTOM,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: MyColors.darkTextColor,
-                            textColor: Colors.white,
-                            fontSize: 16.sp,
-                          );
-                        }).catchError((e) {
-                          debugPrint('Error adding a user from firestore: ' +
-                              e.toString());
-                        });
-                      }
-                    },
-                    style: ButtonStyle(
-                      side: MaterialStateProperty.all(
-                        BorderSide(
-                          color: MyColors.borderColor,
-                        ),
-                      ),
-                      foregroundColor: MaterialStateProperty.all(
-                        MyColors.darkTextColor,
-                      ),
-                      backgroundColor: MaterialStateProperty.all(
-                        MyColors.primaryColor,
-                      ),
-                      padding: MaterialStateProperty.all(
-                        EdgeInsets.symmetric(vertical: 14.h),
-                      ),
-                      textStyle: MaterialStateProperty.all(
-                        TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 30.h,
-                          ),
-                          child: Text(
-                            'Save',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18.sp,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 30.h,
-                          ),
-                          child: Icon(
-                            FontAwesomeIcons.solidArrowAltCircleRight,
-                            size: 25.sp,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+        bottomNavigationBar: buildRegisterButton(formKey),
       ),
     );
   }
@@ -260,6 +157,119 @@ class _RegisterPageState extends State<RegisterPage> {
                 ],
               ),
             )),
+          ),
+        ),
+      );
+
+  Widget buildRegisterButton(formKey) => Container(
+        color: MyColors.textFieldColor,
+        padding: EdgeInsets.symmetric(
+          horizontal: 20.w,
+          vertical: 5.h,
+        ),
+        height: 70.h,
+        child: Center(
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      User user = User(
+                        name: firstNameController.text.trim(),
+                        surname: lastNameController.text.trim(),
+                        contactNumber: widget.phoneNumber.trim(),
+                        email: emailController.text.trim(),
+                        country: 'South Africa',
+                        imageUrl:
+                            'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngfind.com%2Fmpng%2FmJbmTb_png-file-svg-add-employee-icon-transparent-png%2F&psig=AOvVaw26wyGBlxMUHpu2LNYOjDJg&ust=1626003509118000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCJDWw6O12PECFQAAAAAdAAAAABAD',
+                        lastMessageTime: DateTime.now(),
+                        password: 'password',
+                        userType: 'client',
+                      );
+
+                      FirebaseApi.addUser(user).then((result) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MainPostsPage(
+                              firstName: '${result!.name}',
+                              lastName: '${result.surname}',
+                              email: '${result.email}',
+                              contactNumber: '${result.contactNumber}',
+                              idUser: '${result.idUser}',
+                            ),
+                          ),
+                        );
+                        Fluttertoast.showToast(
+                          msg: 'User Successfully saved.',
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: MyColors.darkTextColor,
+                          textColor: Colors.white,
+                          fontSize: 16.sp,
+                        );
+                      }).catchError((e) {
+                        debugPrint('Error adding a user from firestore: ' +
+                            e.toString());
+                      });
+                    }
+                  },
+                  style: ButtonStyle(
+                    side: MaterialStateProperty.all(
+                      BorderSide(
+                        color: MyColors.borderColor,
+                      ),
+                    ),
+                    foregroundColor: MaterialStateProperty.all(
+                      MyColors.darkTextColor,
+                    ),
+                    backgroundColor: MaterialStateProperty.all(
+                      MyColors.primaryColor,
+                    ),
+                    padding: MaterialStateProperty.all(
+                      EdgeInsets.symmetric(vertical: 14.h),
+                    ),
+                    textStyle: MaterialStateProperty.all(
+                      TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 30.h,
+                        ),
+                        child: Text(
+                          'Save',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.sp,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 30.h,
+                        ),
+                        child: Icon(
+                          FontAwesomeIcons.solidArrowAltCircleRight,
+                          size: 25.sp,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       );

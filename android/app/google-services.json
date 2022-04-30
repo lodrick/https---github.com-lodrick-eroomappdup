@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "850176006314",
+    "firebase_url": "https://eroomapp-74e1f-default-rtdb.firebaseio.com",
     "project_id": "eroomapp-74e1f",
     "storage_bucket": "eroomapp-74e1f.appspot.com"
   },
@@ -14,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "850176006314-5du3a2notue5pmuk535kit08omjjadhm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eroom.eRoomApp",
+            "certificate_hash": "fb95c855901aac44640709d82953beb75fba9a56"
+          }
+        },
+        {
+          "client_id": "850176006314-8u0m5tlj020v5eqjnnqcm122vlvks6ss.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eroom.eRoomApp",
+            "certificate_hash": "a042f5560c1290f42b2451bf63a749a316fd4692"
+          }
+        },
+        {
           "client_id": "850176006314-a1to56m19pbojd4qav091ap764d9v18m.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -21,35 +38,6 @@
             "certificate_hash": "55192859b669818d0f01cee4f642b0c6a8fceb17"
           }
         },
-        {
-          "client_id": "850176006314-1ep3ql43u042iqrggt7di287ra66vqm0.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAfFQOYTmVqyZBjpYyWq7ZFiNFA6Mf96TU"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "850176006314-1ep3ql43u042iqrggt7di287ra66vqm0.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:850176006314:android:276b7a5cd70139d76b98d3",
-        "android_client_info": {
-          "package_name": "com.example.eRoomApp"
-        }
-      },
-      "oauth_client": [
         {
           "client_id": "850176006314-1ep3ql43u042iqrggt7di287ra66vqm0.apps.googleusercontent.com",
           "client_type": 3

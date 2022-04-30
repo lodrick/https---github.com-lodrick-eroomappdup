@@ -137,7 +137,7 @@ class _ChatBodyWidgetState extends State<ChatBodyWidget> {
   void showNotification(message) async {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
       Platform.isAndroid ? '' : '',
-      'Flutter chat demo',
+      'Eroom chat',
       playSound: true,
       enableVibration: true,
       importance: Importance.max,

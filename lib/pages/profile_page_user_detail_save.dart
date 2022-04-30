@@ -153,45 +153,6 @@ class _ProfilePageUserDetailSaveState extends State<ProfilePageUserDetailSave> {
     }
   }
 
-  Widget getTextField({
-    required String hint,
-    required String labelText,
-    required TextEditingController controller,
-    required String errorText,
-  }) {
-    return TextFormField(
-      controller: controller,
-      validator: (value) {
-        if ((value == null && value!.isEmpty) ||
-            !RegExp(r'^[A-Za-z0-9]+$').hasMatch(value)) {
-          //!RegExp(r'^[a-z A-Z]+$').hasMatch(value)
-
-          return errorText;
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0.r),
-          borderSide: const BorderSide(color: Colors.transparent, width: 0),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.r),
-          borderSide: const BorderSide(color: Colors.transparent, width: 0),
-        ),
-        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
-        filled: true,
-        fillColor: MyColors.textFieldColor,
-        hintText: hint,
-        labelText: labelText + '*',
-        hintStyle: TextStyle(
-          fontSize: 14.sp,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-    );
-  }
-
   Widget rowUser({
     required IconData fieldIconData,
     required String text,
